@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陈工插件 - AlphaCAM 刀路优化专家</title>
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --primary-light: #ebf8ff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --bg-light: #f7fafc;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        body { color: var(--text-main); background-color: var(--bg-light); line-height: 1.6; }
+        header { background: var(--white); padding: 40px 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        header h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+        header p { color: var(--text-muted); font-size: 1.1rem; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .card { background: var(--white); border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 12px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .feature-item { background: var(--primary-light); padding: 20px; border-radius: 8px; }
+        .feature-item h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
+        .feature-item p { font-size: 0.95rem; color: var(--text-muted); }
+        .log-entry { border-bottom: 1px solid #edf2f7; padding: 15px 0; }
+        .log-entry:last-child { border-bottom: none; }
+        .log-date { font-weight: bold; color: var(--primary); font-size: 0.9rem; }
+        .log-content { margin-top: 5px; }
+        .btn { display: inline-block; background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.3s; margin-top: 15px; }
+        .btn:hover { background: #1a4f82; }
+        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.9rem; margin-top: 40px; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>陈工插件</h1>
+        <p>AlphaCAM 刀路排序 · 批量修改 · 一键撤销 效率工具</p>
+    </header>
+
+    <div class="container">
+        <!-- 插件简介 -->
+        <div class="card">
+            <h2>📌 插件简介</h2>
+            <p>陈工插件是一款专为 AlphaCAM 用户打造的 VBA 二次开发工具，旨在解决板式家具及定制加工中刀路排序繁琐、下刀点修改困难等痛点，大幅提升编程与加工效率。</p>
+        </div>
+
+        <!-- 核心功能 -->
+        <div class="card">
+            <h2>🚀 核心功能</h2>
+            <div class="features">
+                <div class="feature-item">
+                    <h3>📊 刀路分组排序</h3>
+                    <p>支持按加工道次/板件局部排序，提供左→右、下→上等四种常用排序规则。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🛠️ 批量修改下刀点</h3>
+                    <p>支持基准角（左下/右上等）选择，配合 X/Y 偏移量，一键批量修改刀路下刀位置。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔄 刀路换向与撤销</h3>
+                    <p>一键反转全部刀路方向，内置独立撤销栈，操作失误可一键撤回全部修改。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>☁️ 云端公告同步</h3>
+                    <p>内置码云静态公告拉取功能，只需在云端更新公告文本，客户端自动获取最新通知。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 更新日志 -->
+        <div class="card">
+            <h2>📝 更新日志</h2>
+            <div class="log-entry">
+                <div class="log-date">2026-09-26</div>
+                <div class="log-content">v1.0 版本发布：完成刀路排序、批量修改下刀点、刀路反转、一键撤销核心功能，接入云端公告。</div>
+            </div>
+            <!-- 你可以在这里继续添加更多更新日志 -->
+        </div>
+
+        <!-- 下载与使用 -->
+        <div class="card" style="text-align: center;">
+            <h2>📥 获取插件</h2>
+            <p>点击下方按钮下载最新版插件安装包及使用说明。</p>
+            <!-- 这里替换成你的真实下载链接（可以是码云仓库的 Releases 链接或网盘链接） -->
+            <a href="#" class="btn">下载最新版</a>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">建议配合 AlphaCAM 2020 及以上版本使用</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 陈工插件 | 保持热爱，持续打磨</p>
+    </footer>
+
+</body>
+</html>
