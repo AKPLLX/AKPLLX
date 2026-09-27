@@ -8,7 +8,7 @@
 
 # --- 公告 ---
 # 公告: 欢迎使用陈工插件！遇到问题请点击下方【提交反馈】或联系陈工微信13209158561。
-中秋国庆双节将至，陈工插件祝您节日快乐！插件已更新，新增一键提取机器码和自助激活功能。
+国庆节将至，陈工插件祝您节日快乐！插件已更新，新增检查更新和自助激活功能。
 
 # --- 帮助图片（每张图两个源，国内优先、国外次之，两个源用 | 分隔；多张图之间用英文逗号 , 分隔）---
 # 帮助图片: https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu1.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu1.png,https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu2.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu2.png,https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu3.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu3.png
