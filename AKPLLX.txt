@@ -1,10 +1,11 @@
 # ============================================
-# 陈工插件 远程配置中心
+# 陈工插件 配置中心
 # ============================================
-
 # --- 版本与更新 ---
-# 版本: 8.8.8
+# 版本: 8.8.9
+# 下载地址: https://pan.baidu.com/s/1QkaVOzPuXTFd-EpU15me4g?pwd=9999#list/path=%2F
 # 官方资源: https://alphacam-d7gfhqdce59eb761e-1251339172.tcloudbaseapp.com/alphacam/
+# 店铺地址: https://8v1wjlr6hzsrtbwpkazrp0r5qcvfqad.taobao.com/
 
 # --- 公告 ---
 # 公告: 欢迎使用陈工插件！遇到问题请点击下方【提交反馈】或联系陈工微信13209158561。
