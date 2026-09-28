@@ -6,7 +6,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "@cloudbase/node-sdk": "latest"
+    "express": "^4.17.1"
   }
 }
