@@ -57,7 +57,7 @@ app.get('/', (req, res) => res.send('alphacam-stats service is running'));
 
 app.post('/heartbeat', async (req, res) => {
   try {
-    const { machineCode, userName, authMode } = req.body;
+    const { machineCode, userName, authMode, version } = req.body;
     if (!machineCode) return res.status(400).send('Missing machineCode');
 
     const data = loadData();
@@ -67,6 +67,7 @@ app.post('/heartbeat', async (req, res) => {
     if (!data[machineCode]) {
       data[machineCode] = {
         machineCode, userName: userName || '未填写', authMode: authMode || '未知',
+        version: version || '',
         firstSeen: now, lastSeen: now, heartbeatCount: 0,
         ip: '', country: '', region: '', city: '', isp: ''
       };
@@ -75,6 +76,7 @@ app.post('/heartbeat', async (req, res) => {
     const user = data[machineCode];
     user.userName = userName || user.userName || '未填写';
     user.authMode = authMode || user.authMode || '未知';
+    user.version = version || user.version || '';
     user.lastSeen = now;
     user.heartbeatCount = (user.heartbeatCount || 0) + 1;
 
@@ -112,6 +114,7 @@ app.get('/stats', (req, res) => {
       machineCode: u.machineCode || key,
       userName: u.userName || '未填写',
       authMode: u.authMode || '未知',
+      version: u.version || '',
       ip: u.ip || '',
       location: [u.country, u.region, u.city, u.isp].filter(Boolean).join(' '),
       isOnline: isOnline,
@@ -139,6 +142,7 @@ app.get('/view', (req, res) => {
     rows.push(`<tr>
       <td>${u.userName || '未填写'}</td>
       <td>${u.machineCode || key}</td>
+      <td>${u.version || ''}</td>
       <td>${u.authMode || '未知'}</td>
       <td>${[u.country, u.region, u.city, u.isp].filter(Boolean).join(' ')}</td>
       <td>${u.ip || ''}</td>
@@ -158,7 +162,7 @@ app.get('/view', (req, res) => {
   html += '.summary span{margin-right:20px;font-size:16px;} .summary b{color:#4a90d9;font-size:22px;}</style></head><body>';
   html += '<h1>陈工插件 - 用户统计</h1>';
   html += `<div class="summary"><span>总用户：<b>${total}</b></span><span>在线用户：<b>${online}</b>（60分钟内）</span></div>`;
-  html += '<table><tr><th>用户名</th><th>机器码</th><th>授权</th><th>位置</th><th>IP</th><th>心跳次数</th><th>状态</th><th>最后在线</th></tr>';
+  html += '<table><tr><th>用户名</th><th>机器码</th><th>版本</th><th>授权</th><th>位置</th><th>IP</th><th>心跳次数</th><th>状态</th><th>最后在线</th></tr>';
   html += rows.join('');
   html += '</table></body></html>';
   res.send(html);
