@@ -16,7 +16,7 @@
 # 帮助图片: https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu1.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu1.png,https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu2.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu2.png,https://cdn.jsdelivr.net/gh/AKPLLX/AKPLLX@main/tu3.png?v=1.1.0|https://raw.githubusercontent.com/AKPLLX/AKPLLX/main/tu3.png
 
 # --- 敏感词过滤 ---
-# 敏感词: 你爹,傻逼,操你,狗东西,去死,垃圾,废物,尼玛,变态,草泥马,操你妈,干你娘,妈的,他妈,靠北,沙雕,智障,脑残,贱人,婊子,狗娘养的,畜生,混蛋,王八蛋,死全家,死爹,死妈,孤儿,杂种,野种,狗杂种,贱狗,傻狗,滚蛋,滚你妈,下贱,骚货,烂货,破鞋,神经病,没爹妈,没家教,废物点心,废物垃圾,死胖子,死瘦子,四眼狗,娘娘腔,太监,舔狗,汉奸,走狗
+# 敏感词: 你爹,傻逼,操你,狗东西,去死,垃圾,废物,尼玛,变态,草泥马,操你妈,干你娘,妈的,他妈,靠北,沙雕,智障,脑残,贱人,婊子,狗娘养的,畜生,混蛋,王八蛋,死全家,死爹,死妈,孤儿,杂种,野种,狗杂种,贱狗,傻狗,滚蛋,滚你妈,下贱,骚货,烂货,破鞋,神经病,没爹妈,没家教,废物点心,废物垃圾,死胖子,死瘦子,四眼狗,娘娘腔,太监,舔狗,汉奸,走狗,傻叉,滚粗,废柴,辣鸡,菜鸡,坑货,骗子,狗带,扑街,憨批,龟儿子,兔崽子,王八羔子,杂碎,败类,人渣,畜生不如,不得好死,断子绝孙,天打雷劈,遭雷劈,出门被车撞
 
 # --- 授权黑名单（机器码，逗号分隔）---
 # 授权黑名单: 1631459877090,888,999
