@@ -1,88 +1,65 @@
 const express = require('express');
-const cloudbase = require('@cloudbase/node-sdk');
+const fs = require('fs');
 
 const app = express();
 app.use(express.json());
 
-const tcb = cloudbase.init({
-  env: cloudbase.SYMBOL_CURRENT_ENV
-});
-const db = tcb.database();
-const collection = db.collection('user_heartbeats');
+const DATA_FILE = '/tmp/users.json';
 
-async function getIpInfo(ip) {
+function loadData() {
   try {
-    const res = await fetch(`http://ip-api.com/json/${ip}?lang=zh-CN`);
-    const data = await res.json();
-    if (data.status === 'success') {
-      return {
-        country: data.country || '',
-        region: data.regionName || '',
-        city: data.city || '',
-        isp: data.isp || ''
-      };
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
     }
   } catch (e) {}
-  return { country: '', region: '', city: '', isp: '' };
+  return {};
 }
 
-// 心跳上报
-app.post('/heartbeat', async (req, res) => {
+function saveData(data) {
   try {
-    const { machineCode, userName, authMode } = req.body;
-    if (!machineCode) return res.status(400).send('Missing machineCode');
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data));
+  } catch (e) {}
+}
 
-    const ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.ip;
-    const ipInfo = await getIpInfo(ip);
-    const now = Date.now();
-
-    await collection.doc(machineCode).set({
-      userName: userName || '未填写',
-      authMode: authMode || '未知',
-      ip: ip,
-      country: ipInfo.country,
-      region: ipInfo.region,
-      city: ipInfo.city,
-      isp: ipInfo.isp,
-      lastSeen: now
-    });
-
-    res.send('OK');
-  } catch (e) {
-    res.status(500).send('Error: ' + e.message);
-  }
+app.get('/', (req, res) => {
+  res.send('alphacam-stats service is running');
 });
 
-// 统计查询
-app.get('/stats', async (req, res) => {
-  try {
-    const now = Date.now();
-    const onlineThreshold = 60 * 60 * 1000; // 1小时内算在线
+app.post('/heartbeat', (req, res) => {
+  const { machineCode, userName, authMode } = req.body;
+  if (!machineCode) return res.status(400).send('Missing machineCode');
 
-    const countResult = await collection.count();
-    const total = countResult.total;
-
-    const onlineResult = await collection.where({
-      lastSeen: db.command.gt(now - onlineThreshold)
-    }).count();
-    const online = onlineResult.total;
-
-    const onlineUsersResult = await collection.where({
-      lastSeen: db.command.gt(now - onlineThreshold)
-    }).get();
-
-    const onlineList = onlineUsersResult.data.map(u => {
-      const loc = [u.region, u.city].filter(Boolean).join(' ');
-      return `${u.userName}(${loc} ${u.authMode})`;
-    }).join(', ');
-
-    res.json({ total, online, onlineList });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  const data = loadData();
+  data[machineCode] = {
+    userName: userName || '未填写',
+    authMode: authMode || '未知',
+    lastSeen: Date.now()
+  };
+  saveData(data);
+  res.send('OK');
 });
 
-const port = process.env.PORT || 80;
+app.get('/stats', (req, res) => {
+  const data = loadData();
+  const now = Date.now();
+  const onlineThreshold = 60 * 60 * 1000;
+
+  let total = 0;
+  let online = 0;
+  const onlineList = [];
+
+  for (const key in data) {
+    total++;
+    if (now - data[key].lastSeen < onlineThreshold) {
+      online++;
+      onlineList.push(data[key].userName + '(' + data[key].authMode + ')');
+    }
+  }
+
+  res.json({ total, online, onlineList: onlineList.join(', ') });
+});
+
+const port = 80;
 app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port}`);
+  console.log('Server running on port ' + port);
 });
