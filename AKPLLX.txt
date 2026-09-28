@@ -2,7 +2,7 @@
 # 陈工插件 配置中心
 # ============================================
 # --- 版本与更新 ---
-# 版本: 8.9.8
+# 版本: 8.9.9
 # 下载地址: https://gitee.com/akpllx/akpllx/raw/master/外挂插件.arb
 # 官方资源: https://alphacam-d7gfhqdce59eb761e-1251339172.tcloudbaseapp.com/alphacam/
 # 店铺地址: https://8v1wjlr6hzsrtbwpkazrp0r5qcvfqad.taobao.com/
