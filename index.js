@@ -101,7 +101,7 @@ app.post('/heartbeat', async (req, res) => {
 app.get('/stats', (req, res) => {
   const data = loadData();
   const now = Date.now();
-  const onlineThreshold = 60 * 60 * 1000;
+  const onlineThreshold = 3 * 60 * 60 * 1000;
   let total = 0, online = 0;
   const users = [];
 
@@ -130,7 +130,7 @@ app.get('/stats', (req, res) => {
 app.get('/view', (req, res) => {
   const data = loadData();
   const now = Date.now();
-  const onlineThreshold = 60 * 60 * 1000;
+  const onlineThreshold = 3 * 60 * 60 * 1000;
   let total = 0, online = 0;
   const rows = [];
 
@@ -161,7 +161,7 @@ app.get('/view', (req, res) => {
   html += 'h1{color:#333;} .summary{background:#fff;padding:15px;margin-bottom:15px;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,.1);}';
   html += '.summary span{margin-right:20px;font-size:16px;} .summary b{color:#4a90d9;font-size:22px;}</style></head><body>';
   html += '<h1>陈工插件 - 用户统计</h1>';
-  html += `<div class="summary"><span>总用户：<b>${total}</b></span><span>在线用户：<b>${online}</b>（60分钟内）</span></div>`;
+  html += `<div class="summary"><span>总用户：<b>${total}</b></span><span>在线用户：<b>${online}</b>（3小时内）</span></div>`;
   html += '<table><tr><th>用户名</th><th>机器码</th><th>版本</th><th>授权</th><th>位置</th><th>IP</th><th>心跳次数</th><th>状态</th><th>最后在线</th></tr>';
   html += rows.join('');
   html += '</table></body></html>';
