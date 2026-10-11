@@ -3,101 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>陈工插件 - AlphaCAM 刀路优化专家</title>
+    <title>陈工数控 - AlphaCAM插件与图库</title>
+    
+    <!-- 浏览器标签页图标 -->
+    <link rel="icon" href="https://i.postimg.cc/ydRkrtjv/chen.png" type="image/png">
+    
     <style>
         :root {
-            --primary: #2b6cb0;
-            --primary-light: #ebf8ff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --bg-light: #f7fafc;
-            --white: #ffffff;
+            --primary: #3b82f6; 
+            --primary-hover: #2563eb;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --card-bg: #f8fafc; 
+            --bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+            --nav-bg: rgba(15, 23, 42, 0.95);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-        body { color: var(--text-main); background-color: var(--bg-light); line-height: 1.6; }
-        header { background: var(--white); padding: 40px 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        header h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
-        header p { color: var(--text-muted); font-size: 1.1rem; }
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-        .card { background: var(--white); border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-        h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 12px; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature-item { background: var(--primary-light); padding: 20px; border-radius: 8px; }
-        .feature-item h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
+        
+        html { scroll-behavior: smooth; }
+        html, body { width: 100%; min-height: 100vh; }
+        
+        body { 
+            color: var(--text-main); 
+            background: var(--bg-gradient); 
+            background-attachment: fixed;
+            line-height: 1.6; 
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px; 
+        }
+        
+        /* --- 顶部导航栏 --- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px); 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+        .nav-logo span { color: var(--primary); }
+        .nav-links { display: flex; align-items: center; gap: 30px; }
+        .nav-links a { color: #cbd5e1; text-decoration: none; font-size: 1rem; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        
+        /* --- 导航栏下拉菜单 --- */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown .dropbtn { color: #cbd5e1; text-decoration: none; font-size: 1rem; transition: color 0.3s; cursor: pointer; }
+        .dropdown:hover .dropbtn { color: #fff; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--nav-bg);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+            z-index: 1001;
+            border-radius: 8px;
+            overflow: hidden;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-top: 5px;
+        }
+        .dropdown-content a {
+            color: #cbd5e1;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--primary);
+            color: #fff;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        
+        /* --- 主体内容 --- */
+        header { padding: 80px 5% 40px; text-align: center; }
+        header h1 { font-size: 3.2rem; color: #fff; margin-bottom: 15px; letter-spacing: 2px; }
+        header p { color: #94a3b8; font-size: 1.2rem; letter-spacing: 1px; }
+        
+        .container { flex: 1; width: 100%; padding: 0 5% 60px; }
+        
+        .card { background: var(--card-bg); border-radius: 16px; padding: 45px; margin-bottom: 35px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 15px; }
+        
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
+        .feature-item { background: #e2e8f0; padding: 30px; border-radius: 12px; transition: transform 0.2s; }
+        .feature-item:hover { transform: translateY(-5px); }
+        .feature-item h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
         .feature-item p { font-size: 0.95rem; color: var(--text-muted); }
-        .log-entry { border-bottom: 1px solid #edf2f7; padding: 15px 0; }
+        
+        /* --- 图片画廊（已修改排版） --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr); /* 大屏下分为10份 */
+            gap: 12px; /* 间距缩小，排版更紧凑 */
+            margin-top: 20px;
+        }
+        .gallery-img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px; /* 圆角调小，看起来更精致 */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08); /* 阴影调浅 */
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        /* 竖屏图：占2份（10/2 = 每行5张） */
+        .gallery-img:not(.landscape) {
+            grid-column: span 2;
+        }
+        /* 横屏图：占5份（10/5 = 每行2张） */
+        .gallery-img.landscape {
+            grid-column: span 5;
+        }
+        
+        /* --- 下载与教程按钮 --- */
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; }
+        .btn { display: inline-block; background: var(--primary); color: #fff; padding: 15px 45px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: background 0.3s; border: none; cursor: pointer; }
+        .btn:hover { background: var(--primary-hover); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+        
+        /* --- 联系与店铺区域 --- */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; margin-top: 25px; }
+        .contact-item { background: #fff; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; }
+        .contact-item img { width: 100%; max-width: 180px; height: auto; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .contact-item h3 { font-size: 1.2rem; margin-bottom: 15px; color: var(--text-main); }
+        .contact-item p { margin-bottom: 15px; color: var(--text-muted); font-size: 1rem; }
+        
+        /* 微信复制框 */
+        .wechat-box { display: flex; align-items: center; justify-content: center; gap: 10px; background: #f1f5f9; padding: 10px 20px; border-radius: 8px; width: 100%; margin-top: 10px;}
+        .wechat-box span { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
+        .wechat-box button { padding: 5px 15px; background: var(--primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+        
+        /* --- 更新日志 --- */
+        .log-entry { border-bottom: 1px solid #cbd5e1; padding: 20px 0; }
         .log-entry:last-child { border-bottom: none; }
-        .log-date { font-weight: bold; color: var(--primary); font-size: 0.9rem; }
-        .log-content { margin-top: 5px; }
-        .btn { display: inline-block; background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.3s; margin-top: 15px; }
-        .btn:hover { background: #1a4f82; }
-        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.9rem; margin-top: 40px; }
-        @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            .card { padding: 20px; }
+        .log-date { font-weight: bold; color: var(--primary); font-size: 1.1rem; margin-bottom: 5px; }
+        .log-content { font-size: 1rem; color: var(--text-main); }
+        
+        footer { text-align: center; padding: 40px 20px; color: #64748b; font-size: 0.95rem; border-top: 1px solid #1e293b; }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; height: 70px; }
+            .nav-logo { font-size: 1.3rem; }
+            .nav-logo img { height: 30px; }
+            .nav-links { display: none; }
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1rem; }
+            .card { padding: 25px; }
+            .features { grid-template-columns: 1fr; }
+            
+            /* 手机端回退为2列 */
+            .gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .gallery-img:not(.landscape), .gallery-img.landscape { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
+    <!-- 顶部导航栏 -->
+    <nav>
+        <div class="nav-logo">
+            <img src="https://i.postimg.cc/ydRkrtjv/chen.png" alt="陈工数控Logo">
+            <span>陈工</span>数控
+        </div>
+        <div class="nav-links">
+            <a href="#">首页</a>
+            <a href="#features">核心功能</a>
+            
+            <!-- 导航栏下拉菜单 -->
+            <div class="dropdown">
+                <a href="#download" class="dropbtn">下载插件 ▼</a>
+                <div class="dropdown-content">
+                    <a href="https://gitee.com/akpllx/akpllx/raw/master/陈工插件.exe">下载插件</a>
+                    <a href="https://pan.baidu.com/s/1QkaVOzPuXTFd-EpU15me4g?pwd=9999" target="_blank">百度网盘下载</a>
+                    <a href="https://docs.qq.com/s/AX9HG8gU321bLIxoGhpNrq" target="_blank">查看使用教程</a>
+                </div>
+            </div>
+            
+            <a href="#contact">联系与店铺</a>
+            <a href="#log">更新日志</a>
+        </div>
+    </nav>
+
+    <!-- 头部大标题 -->
     <header>
-        <h1>陈工插件</h1>
-        <p>AlphaCAM 刀路排序 · 批量修改 · 一键撤销 效率工具</p>
+        <h1>陈工数控</h1>
+        <p>AlphaCAM插件 · 图库 · VBA开发 · 柜体 · 柜门</p>
     </header>
 
     <div class="container">
         <!-- 插件简介 -->
-        <div class="card">
-            <h2>📌 插件简介</h2>
-            <p>陈工插件是一款专为 AlphaCAM 用户打造的 VBA 二次开发工具，旨在解决板式家具及定制加工中刀路排序繁琐、下刀点修改困难等痛点，大幅提升编程与加工效率。</p>
+        <div class="card" id="home">
+            <h2>📌 关于我们</h2>
+            <p>陈工数控专注 AlphaCAM 平台的深度二次开发与数控加工效率提升。我们的外挂插件（陈工插件）全面覆盖板式家具与定制加工场景，核心功能包括刀路优化、路径排序、批量修改下刀点、图库管理、门型查询、柜体柜门加工模板、铰链孔与合页孔位处理、标签打印及路径优化等一站式功能。</p>
+            <p style="margin-top:15px;">我们致力于帮助数控编程人员告别重复劳动，实现标准化、自动化加工，让复杂的加工流程变得简单高效。插件基于 VBA 开发，完美兼容 AlphaCAM 2020 及以上版本。</p>
         </div>
 
         <!-- 核心功能 -->
-        <div class="card">
+        <div class="card" id="features">
             <h2>🚀 核心功能</h2>
             <div class="features">
                 <div class="feature-item">
-                    <h3>📊 刀路分组排序</h3>
-                    <p>支持按加工道次/板件局部排序，提供左→右、下→上等四种常用排序规则。</p>
+                    <h3>📊 刀路与路径优化</h3>
+                    <p>支持按加工道次/板件局部排序（左→右、下→上等），批量修改下刀点，一键反转刀路方向，并内置独立撤销栈，防止操作失误。</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🛠️ 批量修改下刀点</h3>
-                    <p>支持基准角（左下/右上等）选择，配合 X/Y 偏移量，一键批量修改刀路下刀位置。</p>
+                    <h3>📚 海量图库与门型</h3>
+                    <p>内置丰富的门型查询库、标准柜体柜门模板。只需输入参数即可快速调用，大幅减少重复建模时间。</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🔄 刀路换向与撤销</h3>
-                    <p>一键反转全部刀路方向，内置独立撤销栈，操作失误可一键撤回全部修改。</p>
+                    <h3>🔩 孔位与标签处理</h3>
+                    <p>精准处理铰链孔、合页孔及反面加工。支持标签一键打印、补打标签及标签设置，满足全流程生产溯源需求。</p>
                 </div>
                 <div class="feature-item">
-                    <h3>☁️ 云端公告同步</h3>
-                    <p>内置码云静态公告拉取功能，只需在云端更新公告文本，客户端自动获取最新通知。</p>
+                    <h3>🛠️ 综合辅助工具</h3>
+                    <p>集成 NC 改名、酒格计算、数据查询、牛角拉手、反面输出等实用外挂功能，全方位提升编程效率。</p>
+                </div>
+            </div>
+
+            <!-- ================= 图片画廊（核心功能下方） ================= -->
+            <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
+                <h3 style="font-size: 1.4rem; color: var(--text-main); margin-bottom: 20px; text-align: center;">📸 功能界面预览</h3>
+                <div class="gallery">
+                    <!-- 第1张：chajian.png -->
+                    <img class="gallery-img" src="https://i.postimg.cc/zv05dFs7/chajian.png" alt="陈工插件主界面">
+                    
+                    <!-- 第2张：chajian1.png -->
+                    <img class="gallery-img" src="https://i.postimg.cc/pL29ssgL/chajian1.png" alt="功能展示1">
+                    
+                    <!-- 第3张：chajian2.png（已按要求替换） -->
+                    <img class="gallery-img" src="https://i.postimg.cc/CK5Rgzhk/chajian2.png" alt="功能展示2">
+                    
+                    <!-- 第4张：chajian3.png -->
+                    <img class="gallery-img" src="https://i.postimg.cc/g07nkmjM/chajian3.png" alt="功能展示3">
+                    
+                    <!-- 第5张：chajian4.png -->
+                    <img class="gallery-img" src="https://i.postimg.cc/k5HBXqD4/chajian4.png" alt="功能展示4">
+                    
+                    <!-- 第6张：chajian5.png（横屏，通栏显示） -->
+                    <img class="gallery-img landscape" src="https://i.postimg.cc/fL0kVp0J/chajian5.png" alt="横屏功能展示1">
+                    
+                    <!-- 第7张：chajian6.png（横屏，通栏显示） -->
+                    <img class="gallery-img landscape" src="https://i.postimg.cc/Hx7jrR7Q/chajian6.png" alt="横屏功能展示2">
+                </div>
+            </div>
+            <!-- ============================================= -->
+        </div>
+
+        <!-- 下载与教程 -->
+        <div class="card" id="download" style="text-align: center;">
+            <h2>📥 获取插件与教程</h2>
+            <p style="margin-bottom: 20px;">点击下方按钮下载最新版插件，或查阅图文安装教程与视频教学。</p>
+            
+            <div class="action-buttons">
+                <a href="https://gitee.com/akpllx/akpllx/raw/master/陈工插件.exe" class="btn">下载插件</a>
+                <a href="https://pan.baidu.com/s/1QkaVOzPuXTFd-EpU15me4g?pwd=9999" target="_blank" class="btn">百度网盘下载</a>
+                <a href="https://docs.qq.com/s/AX9HG8gU321bLIxoGhpNrq" target="_blank" class="btn btn-outline">查看使用教程</a>
+            </div>
+            
+            <div style="background: #e2e8f0; padding: 10px 20px; border-radius: 8px; display: inline-flex; align-items: center; margin-top: 25px; font-weight: bold; color: #e11d48;">
+                提取码：<span id="pwd">9999</span>
+                <button onclick="copyPwd()" style="margin-left: 15px; padding: 5px 15px; background: var(--primary); color: #fff; border: none; border-radius: 4px; cursor: pointer;">复制提取码</button>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #94a3b8;">建议配合 AlphaCAM 2020 及以上版本使用</p>
+        </div>
+
+        <!-- 联系与店铺（二维码区） -->
+        <div class="card" id="contact">
+            <h2>📞 联系与店铺</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <img src="https://i.postimg.cc/这里换成你的淘宝二维码链接.jpg" alt="淘宝店铺" onerror="this.style.display='none'">
+                    <h3>淘宝店铺</h3>
+                    <p>点击下方按钮直接进入陈工数控淘宝店铺</p>
+                    <a href="https://8v1wjlr6hzsrtbwpkazrp0r5qcvfqad.taobao.com/" target="_blank" class="btn" style="padding: 10px 25px; font-size: 1rem;">点击进入淘宝店</a>
+                </div>
+                <div class="contact-item">
+                    <img src="https://i.postimg.cc/这里换成你的QQ二维码链接.jpg" alt="QQ联系" onerror="this.style.display='none'">
+                    <h3>QQ 咨询</h3>
+                    <p>点击下方按钮，直接发起 QQ 会话</p>
+                    <a href="tencent://message/?uin=630498624&Menu=yes" class="btn" style="padding: 10px 25px; font-size: 1rem;">点击发起QQ会话</a>
+                </div>
+                <div class="contact-item">
+                    <img src="https://i.postimg.cc/这里换成你的微信二维码链接.jpg" alt="微信联系" onerror="this.style.display='none'">
+                    <h3>微信联系</h3>
+                    <p>添加微信获取最新资讯与技术支持</p>
+                    <div class="wechat-box">
+                        <span id="wechatId">AKPLLX</span>
+                        <button onclick="copyWechat()">复制微信号</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 更新日志 -->
-        <div class="card">
+        <div class="card" id="log">
             <h2>📝 更新日志</h2>
             <div class="log-entry">
-                <div class="log-date">2026-09-26</div>
-                <div class="log-content">v1.0 版本发布：完成刀路排序、批量修改下刀点、刀路反转、一键撤销核心功能，接入云端公告。</div>
+                <div class="log-date">v1.2.0 - 2026-09-26</div>
+                <div class="log-content">商业版正式发布：全面集成刀路优化与图库管理系统；新增铰链孔、合页孔及反面加工模块；优化标签打印与补打流程；内置云端公告同步与一键撤销机制。</div>
             </div>
-            <!-- 你可以在这里继续添加更多更新日志 -->
-        </div>
-
-        <!-- 下载与使用 -->
-        <div class="card" style="text-align: center;">
-            <h2>📥 获取插件</h2>
-            <p>点击下方按钮下载最新版插件安装包及使用说明。</p>
-            <!-- 这里替换成你的真实下载链接（可以是码云仓库的 Releases 链接或网盘链接） -->
-            <a href="#" class="btn">下载最新版</a>
-            <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">建议配合 AlphaCAM 2020 及以上版本使用</p>
+            <div class="log-entry">
+                <div class="log-date">v1.1.0 - 2026-08-15</div>
+                <div class="log-content">功能扩展：新增门型查询、牛角拉手、酒格计算等综合辅助工具；升级路径优化算法，提升复杂板件排序效率；修复部分环境下的 VBA 兼容性问题。</div>
+            </div>
+            <div class="log-entry">
+                <div class="log-date">v1.0.0 - 2026-07-01</div>
+                <div class="log-content">初版发布：陈工数控 AlphaCAM 外挂插件正式上线，完成刀路分组排序、批量修改下刀点、刀路换向等基础刀路优化功能，支持基础 VBA 定制开发。</div>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 陈工插件 | 保持热爱，持续打磨</p>
+        <p>© 2026 陈工数控 | 专注 AlphaCAM 插件与图库开发</p>
     </footer>
 
+    <script>
+        function copyPwd() {
+            var pwd = document.getElementById("pwd").innerText;
+            navigator.clipboard.writeText(pwd).then(function() {
+                alert("提取码 " + pwd + " 已复制到剪贴板！");
+            }, function(err) {
+                alert("复制失败，请手动复制：" + pwd);
+            });
+        }
+        function copyWechat() {
+            var wx = document.getElementById("wechatId").innerText;
+            navigator.clipboard.writeText(wx).then(function() {
+                alert("微信号 " + wx + " 已复制到剪贴板！");
+            }, function(err) {
+                alert("复制失败，请手动复制：" + wx);
+            });
+        }
+    </script>
 </body>
 </html>
